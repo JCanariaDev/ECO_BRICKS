@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Press - Users Dashboard</title>
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #2e7d32;
+            color: white;
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-menu li.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid white;
+        }
+
+        .nav-menu li i {
+            margin-right: 10px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header h2 {
+            color: #2e7d32;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: #2e7d32;
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #2e7d32;
+            color: #2e7d32;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge-admin {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-user {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            .logo h1, .nav-menu li span {
+                display: none;
+            }
+            .nav-menu li {
+                text-align: center;
+            }
+            .nav-menu li i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+            .main-content {
+                margin-left: 70px;
+                width: calc(100% - 70px);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <h1>Eco Press</h1>
+        </div>
+        <ul class="nav-menu">
+            <li class="active">
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+            </li>
+            <li>
+                <i class="fas fa-recycle"></i>
+                <span>Ecobricks</span>
+            </li>
+            <li>
+                <i class="fas fa-qrcode"></i>
+                <span>QrLogs</span>
+            </li>
+            <li>
+                <i class="fas fa-gift"></i>
+                <span>Rewards</span>
+            </li>
+            <li>
+                <i class="fas fa-exchange-alt"></i>
+                <span>Redemptions</span>
+            </li>
+            <li>
+                <i class="fas fa-clipboard-list"></i>
+                <span>System.Logs</span>
+            </li>
+            <li>
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+            </li>
+            <li>
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h2>Users</h2>
+            <div class="user-actions">
+                <button class="btn btn-outline">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add User
+                </button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User Name</th>
+                        <th>Contact Number</th>
+                        <th>Email Address</th>
+                        <th>User Type</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>09123456789</td>
+                        <td>john.doe@example.com</td>
+                        <td><span class="badge badge-admin">Admin</span></td>
+                        <td>2023-05-15</td>
+                        <td>
+                            <i class="fas fa-edit action-icon" title="Edit"></i>
+                            <i class="fas fa-trash action-icon" title="Delete"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jane Smith</td>
+                        <td>09198765432</td>
+                        <td>jane.smith@example.com</td>
+                        <td><span class="badge badge-user">User</span></td>
+                        <td>2023-06-20</td>
+                        <td>
+                            <i class="fas fa-edit action-icon" title="Edit"></i>
+                            <i class="fas fa-trash action-icon" title="Delete"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Robert Johnson</td>
+                        <td>09234567890</td>
+                        <td>robert.j@example.com</td>
+                        <td><span class="badge badge-user">User</span></td>
+                        <td>2023-07-10</td>
+                        <td>
+                            <i class="fas fa-edit action-icon" title="Edit"></i>
+                            <i class="fas fa-trash action-icon" title="Delete"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Maria Garcia</td>
+                        <td>09345678901</td>
+                        <td>maria.g@example.com</td>
+                        <td><span class="badge badge-admin">Admin</span></td>
+                        <td>2023-08-05</td>
+                        <td>
+                            <i class="fas fa-edit action-icon" title="Edit"></i>
+                            <i class="fas fa-trash action-icon" title="Delete"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>David Wilson</td>
+                        <td>09456789012</td>
+                        <td>david.w@example.com</td>
+                        <td><span class="badge badge-user">User</span></td>
+                        <td>2023-09-12</td>
+                        <td>
+                            <i class="fas fa-edit action-icon" title="Edit"></i>
+                            <i class="fas fa-trash action-icon" title="Delete"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Navigation menu functionality
+        document.querySelectorAll('.nav-menu li').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all items
+                document.querySelectorAll('.nav-menu li').forEach(i => {
+                    i.classList.remove('active');
+                });
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // In a real app, you would load the appropriate content here
+                console.log('Navigating to:', this.querySelector('span').textContent);
+            });
+        });
+
+        // Action buttons functionality
+        document.querySelectorAll('.action-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const action = this.title;
+                const userId = this.closest('tr').querySelector('td:first-child').textContent;
+                const userName = this.closest('tr').querySelector('td:nth-child(2)').textContent;
+                
+                if (action === 'Edit') {
+                    alert(`Edit user: ${userName} (ID: ${userId})`);
+                    // In a real app, you would open an edit modal/form
+                } else if (action === 'Delete') {
+                    if (confirm(`Are you sure you want to delete ${userName}?`)) {
+                        alert(`User ${userName} deleted (ID: ${userId})`);
+                        // In a real app, you would make an API call to delete the user
+                    }
+                }
+            });
+        });
+
+        // Add User button functionality
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            alert('Opening Add User form');
+            // In a real app, you would open a modal/form to add a new user
+        });
+    </script>
+</body>
+</html>

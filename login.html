@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoPress - Recycle. Earn. Redeem.</title>
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: linear-gradient(to bottom right, #e8f5e9, #c8e6c9);
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            margin: 2rem 0;
+        }
+
+        h1 {
+            color: #2e7d32;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            color: #4caf50;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 1.5rem 0;
+            width: 100%;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #3d8b40;
+            transform: translateY(-2px);
+        }
+
+        .link-text {
+            margin-top: 1.5rem;
+            color: #666;
+        }
+
+        .link-text a {
+            color: #4caf50;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .link-text a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            background-color: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .tagline {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="container" id="loginPage">
+        <div class="logo">E</div>
+        <h1>EcoPress</h1>
+        <p class="tagline">RECYCLE. EARN. REDEEM.</p>
+        
+        <div class="divider"></div>
+
+        <div class="form-group">
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" placeholder="Enter your admin email">
+        </div>
+
+        <div class="form-group">
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" placeholder="Enter your password">
+        </div>
+
+        <button class="btn btn-primary" id="loginBtn">Login</button>
+
+        <p class="link-text">Don't have an account? <a href="#" id="goToRegister">Register here</a></p>
+    </div>
+
+    <!-- Register Page (initially hidden) -->
+    <div class="container" id="registerPage" style="display: none;">
+        <div class="logo">E</div>
+        <h1>EcoPress</h1>
+        <p class="tagline">RECYCLE. EARN. REDEEM.</p>
+        
+        <div class="divider"></div>
+
+        <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" placeholder="Enter your full name">
+        </div>
+
+        <div class="form-group">
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" placeholder="Enter your date of birth">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="region">Region:</label>
+                <select id="region">
+                    <option value="">Select Region</option>
+                    <option value="NCR">National Capital Region (NCR)</option>
+                    <option value="1">Region I</option>
+                    <!-- Add more regions as needed -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="province">Province:</label>
+                <select id="province">
+                    <option value="">Select Province</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="city">City:</label>
+                <select id="city">
+                    <option value="">Select City</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="barangay">Barangay:</label>
+                <select id="barangay">
+                    <option value="">Select Barangay</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="registerEmail">Email Address:</label>
+            <input type="email" id="registerEmail" placeholder="Enter your admin email">
+        </div>
+
+        <div class="form-group">
+            <label for="registerPassword">Password:</label>
+            <input type="password" id="registerPassword" placeholder="Create a secure password">
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" placeholder="Re-enter your password">
+        </div>
+
+        <button class="btn btn-primary" id="registerBtn">Register</button>
+
+        <p class="link-text">Already have an account? <a href="#" id="goToLogin">Login here</a></p>
+    </div>
+
+    <!-- Load Firebase scripts first -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics-compat.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiq8tkxrl33EOJ7-Zere1nrQYw5iu2mq0",
+            authDomain: "ecobricks-194e9.firebaseapp.com",
+            projectId: "ecobricks-194e9",
+            storageBucket: "ecobricks-194e9.firebasestorage.app",
+            messagingSenderId: "115902487358",
+            appId: "1:115902487358:web:412744e51c541d7d022a6f",
+            measurementId: "G-FG825LBC9V"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const analytics = firebase.analytics();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Page elements
+            const loginPage = document.getElementById('loginPage');
+            const registerPage = document.getElementById('registerPage');
+            const goToRegister = document.getElementById('goToRegister');
+            const goToLogin = document.getElementById('goToLogin');
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+
+            // Navigation between pages
+            goToRegister.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginPage.style.display = 'none';
+                registerPage.style.display = 'block';
+            });
+
+            goToLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerPage.style.display = 'none';
+                loginPage.style.display = 'block';
+            });
+
+            // Login functionality
+            loginBtn.addEventListener('click', function() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (!email || !password) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                // Show loading state
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Logging in...';
+                
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Signed in successfully
+                        const user = userCredential.user;
+                        window.location.href = "dashboard.html";
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        
+                        // Reset button state
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Login';
+                        
+                        // Show user-friendly error messages
+                        if (errorCode === 'auth/invalid-email') {
+                            alert('The email address is not valid.');
+                        } else if (errorCode === 'auth/user-disabled') {
+                            alert('This account has been disabled.');
+                        } else if (errorCode === 'auth/user-not-found') {
+                            alert('No account found with this email.');
+                        } else if (errorCode === 'auth/wrong-password') {
+                            alert('Incorrect password.');
+                        } else {
+                            alert(errorMessage);
+                        }
+                    });
+            });
+
+            // Registration functionality
+            registerBtn.addEventListener('click', function() {
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                // Basic validation
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('Password should be at least 6 characters');
+                    return;
+                }
+                
+                // Show loading state
+                registerBtn.disabled = true;
+                registerBtn.textContent = 'Registering...';
+                
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Signed up successfully
+                        const user = userCredential.user;
+                        
+                        // Reset button state
+                        registerBtn.disabled = false;
+                        registerBtn.textContent = 'Register';
+                        
+                        alert('Registration successful!');
+                        window.location.href = "dashboard.html";
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        
+                        // Reset button state
+                        registerBtn.disabled = false;
+                        registerBtn.textContent = 'Register';
+                        
+                        // Show user-friendly error messages
+                        if (errorCode === 'auth/email-already-in-use') {
+                            alert('This email is already registered.');
+                        } else if (errorCode === 'auth/invalid-email') {
+                            alert('The email address is not valid.');
+                        } else if (errorCode === 'auth/weak-password') {
+                            alert('The password is too weak.');
+                        } else {
+                            alert(errorMessage);
+                        }
+                    });
+            });
+
+            // Simple region/province/city/barangay relationship simulation
+            const regionSelect = document.getElementById('region');
+            const provinceSelect = document.getElementById('province');
+            const citySelect = document.getElementById('city');
+            const barangaySelect = document.getElementById('barangay');
+
+            regionSelect.addEventListener('change', function() {
+                // Clear and disable dependent fields
+                provinceSelect.innerHTML = '<option value="">Select Province</option>';
+                citySelect.innerHTML = '<option value="">Select City</option>';
+                barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+                
+                if (regionSelect.value === 'NCR') {
+                    addOption(provinceSelect, 'Metro Manila', 'Metro Manila');
+                } else if (regionSelect.value === '1') {
+                    addOption(provinceSelect, 'Ilocos Norte', 'Ilocos Norte');
+                    addOption(provinceSelect, 'Ilocos Sur', 'Ilocos Sur');
+                    addOption(provinceSelect, 'La Union', 'La Union');
+                    addOption(provinceSelect, 'Pangasinan', 'Pangasinan');
+                }
+            });
+
+            provinceSelect.addEventListener('change', function() {
+                citySelect.innerHTML = '<option value="">Select City</option>';
+                barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+                
+                if (provinceSelect.value === 'Metro Manila') {
+                    addOption(citySelect, 'Manila', 'Manila');
+                    addOption(citySelect, 'Quezon City', 'Quezon City');
+                    addOption(citySelect, 'Makati', 'Makati');
+                } else if (provinceSelect.value === 'Ilocos Norte') {
+                    addOption(citySelect, 'Laoag', 'Laoag');
+                    addOption(citySelect, 'Batac', 'Batac');
+                }
+            });
+
+            citySelect.addEventListener('change', function() {
+                barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+                
+                if (citySelect.value === 'Manila') {
+                    addOption(barangaySelect, 'Ermita', 'Ermita');
+                    addOption(barangaySelect, 'Malate', 'Malate');
+                } else if (citySelect.value === 'Quezon City') {
+                    addOption(barangaySelect, 'Cubao', 'Cubao');
+                    addOption(barangaySelect, 'Kamuning', 'Kamuning');
+                }
+            });
+
+            function addOption(selectElement, text, value) {
+                const option = document.createElement('option');
+                option.text = text;
+                option.value = value;
+                selectElement.add(option);
+            }
+
+            // Animation on load
+            const containers = document.querySelectorAll('.container');
+            containers.forEach(container => {
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    container.style.transition = 'opacity 0.5s ease, transform 0.5s ease';  
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                }, 100);
+            });
+
+            // Check if user is already logged in
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in, redirect to dashboard
+                    window.location.href = "dashboard.html";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

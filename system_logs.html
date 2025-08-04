@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Press - System Logs</title>
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #2e7d32;
+            color: white;
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-info {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .admin-info h1 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .admin-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-menu li {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-menu li.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid white;
+        }
+
+        .nav-menu li i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .logout-btn {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn i {
+            margin-right: 12px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            color: #2e7d32;
+            font-size: 1.8rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            background-color: #f9f9f9;
+        }
+
+        .date-filter {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0 15px;
+            cursor: pointer;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            color: #2e7d32;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .log-type {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .type-info {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .type-warning {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        .type-error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .type-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2e7d32;
+            margin-right: 10px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .page-info {
+            color: #666;
+        }
+
+        .page-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .page-btn {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .page-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .page-btn.active {
+            background-color: #2e7d32;
+            color: white;
+            border-color: #2e7d32;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            .admin-info h1, .admin-info p, .nav-menu li span, .logout-btn span {
+                display: none;
+            }
+            .nav-menu li {
+                justify-content: center;
+                padding: 12px 0;
+            }
+            .nav-menu li i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+            .logout-btn {
+                justify-content: center;
+            }
+            .logout-btn i {
+                margin-right: 0;
+            }
+            .main-content {
+                margin-left: 70px;
+                width: calc(100% - 70px);
+                padding: 15px;
+            }
+            .controls {
+                flex-direction: column;
+            }
+            .filter-group {
+                width: 100%;
+            }
+            .date-filter {
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="admin-info">
+            <h1>Eco Press</h1>
+            <p>Admin123</p>
+        </div>
+        <ul class="nav-menu">
+            <li>
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </li>
+            <li>
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+            </li>
+            <li>
+                <i class="fas fa-recycle"></i>
+                <span>EcoBricks</span>
+            </li>
+            <li>
+                <i class="fas fa-qrcode"></i>
+                <span>QR Logs</span>
+            </li>
+            <li>
+                <i class="fas fa-gift"></i>
+                <span>Rewards</span>
+            </li>
+            <li>
+                <i class="fas fa-exchange-alt"></i>
+                <span>Redemptions</span>
+            </li>
+            <li class="active">
+                <i class="fas fa-clipboard-list"></i>
+                <span>System Logs</span>
+            </li>
+            <li>
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+            </li>
+            <li>
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </li>
+        </ul>
+        <a href="#" class="logout-btn" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log out</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h2>SYSTEM LOGS</h2>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="clearLogsBtn">
+                    <i class="fas fa-trash-alt"></i> Clear Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search system logs...">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn">
+                    <i class="fas fa-filter"></i>
+                    <span>Filters</span>
+                </button>
+                <select class="date-filter">
+                    <option value="">All Dates</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Log ID</th>
+                        <th>Timestamp</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Type</th>
+                        <th>Details</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>LOG-1001</td>
+                        <td>2023-10-15 14:30:22</td>
+                        <td>Admin123</td>
+                        <td>User Login</td>
+                        <td><span class="log-type type-info">Info</span></td>
+                        <td>Successful login from 192.168.1.1</td>
+                        <td>
+                            <button class="action-btn" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>LOG-1002</td>
+                        <td>2023-10-15 13:45:10</td>
+                        <td>USR-205</td>
+                        <td>Redemption</td>
+                        <td><span class="log-type type-success">Success</span></td>
+                        <td>Redeemed reward RWD-015 (500 points)</td>
+                        <td>
+                            <button class="action-btn" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>LOG-1003</td>
+                        <td>2023-10-15 11:20:35</td>
+                        <td>System</td>
+                        <td>Database Backup</td>
+                        <td><span class="log-type type-info">Info</span></td>
+                        <td>Automatic daily backup completed</td>
+                        <td>
+                            <button class="action-btn" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>LOG-1004</td>
+                        <td>2023-10-14 16:15:42</td>
+                        <td>Admin123</td>
+                        <td>User Update</td>
+                        <td><span class="log-type type-warning">Warning</span></td>
+                        <td>Changed user USR-142 permissions</td>
+                        <td>
+                            <button class="action-btn" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>LOG-1005</td>
+                        <td>2023-10-14 09:05:18</td>
+                        <td>System</td>
+                        <td>Error</td>
+                        <td><span class="log-type type-error">Error</span></td>
+                        <td>Failed to process QR scan from device ID: DX-204</td>
+                        <td>
+                            <button class="action-btn" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <div class="page-info">Showing 1 to 5 of 42 entries</div>
+                <div class="page-controls">
+                    <button class="page-btn"><i class="fas fa-angle-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">4</button>
+                    <button class="page-btn"><i class="fas fa-angle-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation menu functionality
+        document.querySelectorAll('.nav-menu li').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all items
+                document.querySelectorAll('.nav-menu li').forEach(i => {
+                    i.classList.remove('active');
+                });
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // In a real app, you would load the appropriate content here
+                console.log('Navigating to:', this.querySelector('span').textContent);
+            });
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to log out?')) {
+                alert('You have been logged out');
+                // In a real app, you would redirect to login page
+                // window.location.href = "login.html";
+            }
+        });
+
+        // Clear Logs button functionality
+        document.getElementById('clearLogsBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all system logs? This action cannot be undone.')) {
+                alert('System logs cleared');
+                // In a real app, you would make an API call to clear logs
+            }
+        });
+
+        // Action buttons functionality
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const logId = this.closest('tr').querySelector('td:first-child').textContent;
+                alert(`Viewing details for log: ${logId}`);
+                // In a real app, you would show a modal with detailed log information
+            });
+        });
+
+        // Date filter functionality
+        document.querySelector('.date-filter').addEventListener('change', function() {
+            const dateRange = this.value;
+            alert(`Filtering by date range: ${dateRange || 'All'}`);
+            // In a real app, you would filter the table rows
+        });
+
+        // Pagination functionality
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.classList.contains('active')) return;
+                
+                // Remove active class from all buttons
+                document.querySelectorAll('.page-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Add active class to clicked button if it's a number
+                if (!this.querySelector('i')) {
+                    this.classList.add('active');
+                }
+                
+                // In a real app, you would load the appropriate page of data
+                console.log('Loading page:', this.textContent);
+            });
+        });
+    </script>
+</body>
+</html>
