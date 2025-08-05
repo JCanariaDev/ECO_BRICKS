@@ -216,6 +216,22 @@
             color: #999;
             font-size: 0.8rem;
         }
+        .nav-menu li a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav-menu li {
+            padding: 0; /* remove padding from li and add to a instead */
+        }
+
+        .nav-menu li a {
+            padding: 12px 20px;
+        }
 
         /* Responsive Styles */
         @media (max-width: 1200px) {
@@ -261,43 +277,55 @@
             <h1>Eco Press</h1>
         </div>
         <ul class="nav-menu">
-            <li class="active">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-            </li>
-            <li>
-                <i class="fas fa-users"></i>
-                <span>Users</span>
-            </li>
-            <li>
-                <i class="fas fa-recycle"></i>
-                <span>Ecobricks</span>
-            </li>
-            <li>
-                <i class="fas fa-qrcode"></i>
-                <span>QR Logs</span>
-            </li>
-            <li>
-                <i class="fas fa-gift"></i>
-                <span>Rewards</span>
-            </li>
-            <li>
-                <i class="fas fa-exchange-alt"></i>
-                <span>Redemptions</span>
-            </li>
-            <li>
-                <i class="fas fa-clipboard-list"></i>
-                <span>System Logs</span>
-            </li>
-            <li>
-                <i class="fas fa-chart-bar"></i>
-                <span>Reports</span>
-            </li>
-            <li>
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </li>
-        </ul>
+    <li class="active">
+        <a href="dashboard.html">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <li>
+        <a href="users.html">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </a>
+    </li>
+    <li>
+        <a href="eco_bricks.html">
+            <i class="fas fa-recycle"></i>
+            <span>Ecobricks</span>
+        </a>
+    </li>
+    <li>
+        <a href="qr_logs.html">
+            <i class="fas fa-qrcode"></i>
+            <span>QR Logs</span>
+        </a>
+    </li>
+    <li>
+        <a href="redemptions.html">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Redemptions</span>
+        </a>
+    </li>
+    <li>
+        <a href="system_logs.html">
+            <i class="fas fa-clipboard-list"></i>
+            <span>System Logs</span>
+        </a>
+    </li>
+    <li>
+        <a href="reports.html">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reports</span>
+        </a>
+    </li>
+    <li>
+        <a href="settings.html">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+    </li>
+</ul>
         <a href="#" class="logout-btn" id="logoutBtn">
             <i class="fas fa-sign-out-alt"></i>
             <span>Log out</span>

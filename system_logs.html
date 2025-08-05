@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eco Press - System Logs</title>
     <style>
-        /* CSS Reset */
         * {
             margin: 0;
             padding: 0;
@@ -19,7 +18,6 @@
             min-height: 100vh;
         }
 
-        /* Sidebar Styles */
         .sidebar {
             width: 250px;
             background-color: #2e7d32;
@@ -95,7 +93,6 @@
             margin-right: 12px;
         }
 
-        /* Main Content Styles */
         .main-content {
             margin-left: 250px;
             width: calc(100% - 250px);
@@ -169,7 +166,6 @@
             cursor: pointer;
         }
 
-        /* Table Styles */
         .table-container {
             background-color: white;
             border-radius: 8px;
@@ -269,8 +265,23 @@
             color: white;
             border-color: #2e7d32;
         }
+        .nav-menu li a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            width: 100%;
+            height: 100%;
+        }
 
-        /* Responsive Styles */
+        .nav-menu li {
+            padding: 0;
+        }
+
+        .nav-menu li a {
+            padding: 12px 20px;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 70px;
@@ -311,57 +322,67 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Sidebar Navigation -->
     <div class="sidebar">
         <div class="admin-info">
             <h1>Eco Press</h1>
             <p>Admin123</p>
         </div>
         <ul class="nav-menu">
-            <li>
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-            </li>
-            <li>
-                <i class="fas fa-users"></i>
-                <span>Users</span>
-            </li>
-            <li>
-                <i class="fas fa-recycle"></i>
-                <span>EcoBricks</span>
-            </li>
-            <li>
-                <i class="fas fa-qrcode"></i>
-                <span>QR Logs</span>
-            </li>
-            <li>
-                <i class="fas fa-gift"></i>
-                <span>Rewards</span>
-            </li>
-            <li>
-                <i class="fas fa-exchange-alt"></i>
-                <span>Redemptions</span>
-            </li>
-            <li class="active">
-                <i class="fas fa-clipboard-list"></i>
-                <span>System Logs</span>
-            </li>
-            <li>
-                <i class="fas fa-chart-bar"></i>
-                <span>Reports</span>
-            </li>
-            <li>
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </li>
-        </ul>
+    <li>
+        <a href="dashboard.html">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <li>
+        <a href="users.html">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </a>
+    </li>
+    <li>
+        <a href="eco_bricks.html">
+            <i class="fas fa-recycle"></i>
+            <span>Ecobricks</span>
+        </a>
+    </li>
+    <li>
+        <a href="qr_logs.html">
+            <i class="fas fa-qrcode"></i>
+            <span>QR Logs</span>
+        </a>
+    </li>
+    <li>
+        <a href="redemptions.html">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Redemptions</span>
+        </a>
+    </li>
+    <li class="active">
+        <a href="system_logs.html">
+            <i class="fas fa-clipboard-list"></i>
+            <span>System Logs</span>
+        </a>
+    </li>
+    <li>
+        <a href="reports.html">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reports</span>
+        </a>
+    </li>
+    <li>
+        <a href="settings.html">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+    </li>
+</ul>
         <a href="#" class="logout-btn" id="logoutBtn">
             <i class="fas fa-sign-out-alt"></i>
             <span>Log out</span>
         </a>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
         <div class="header">
             <h2>SYSTEM LOGS</h2>
@@ -486,72 +507,81 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth-compat.js"></script>
+
     <script>
-        // Navigation menu functionality
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiq8tkxrl33EOJ7-Zere1nrQYw5iu2mq0",
+            authDomain: "ecobricks-194e9.firebaseapp.com",
+            projectId: "ecobricks-194e9",
+            storageBucket: "ecobricks-194e9.firebasestorage.app",
+            messagingSenderId: "115902487358",
+            appId: "1:115902487358:web:412744e51c541d7d022a6f",
+            measurementId: "G-FG825LBC9V"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = "login.html";
+            }
+        });
+
         document.querySelectorAll('.nav-menu li').forEach(item => {
             item.addEventListener('click', function() {
-                // Remove active class from all items
                 document.querySelectorAll('.nav-menu li').forEach(i => {
                     i.classList.remove('active');
                 });
-                // Add active class to clicked item
                 this.classList.add('active');
-                
-                // In a real app, you would load the appropriate content here
                 console.log('Navigating to:', this.querySelector('span').textContent);
             });
         });
 
-        // Logout functionality
         document.getElementById('logoutBtn').addEventListener('click', function(e) {
             e.preventDefault();
             if (confirm('Are you sure you want to log out?')) {
-                alert('You have been logged out');
-                // In a real app, you would redirect to login page
-                // window.location.href = "login.html";
+                auth.signOut().then(() => {
+                    window.location.href = "login.html";
+                }).catch((error) => {
+                    console.error('Logout error:', error);
+                    alert('Error during logout. Please try again.');
+                });
             }
         });
 
-        // Clear Logs button functionality
         document.getElementById('clearLogsBtn').addEventListener('click', function() {
             if (confirm('Are you sure you want to clear all system logs? This action cannot be undone.')) {
                 alert('System logs cleared');
-                // In a real app, you would make an API call to clear logs
             }
         });
 
-        // Action buttons functionality
         document.querySelectorAll('.action-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const logId = this.closest('tr').querySelector('td:first-child').textContent;
                 alert(`Viewing details for log: ${logId}`);
-                // In a real app, you would show a modal with detailed log information
             });
         });
 
-        // Date filter functionality
         document.querySelector('.date-filter').addEventListener('change', function() {
             const dateRange = this.value;
             alert(`Filtering by date range: ${dateRange || 'All'}`);
-            // In a real app, you would filter the table rows
         });
 
-        // Pagination functionality
         document.querySelectorAll('.page-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 if (this.classList.contains('active')) return;
                 
-                // Remove active class from all buttons
                 document.querySelectorAll('.page-btn').forEach(b => {
                     b.classList.remove('active');
                 });
                 
-                // Add active class to clicked button if it's a number
                 if (!this.querySelector('i')) {
                     this.classList.add('active');
                 }
                 
-                // In a real app, you would load the appropriate page of data
                 console.log('Loading page:', this.textContent);
             });
         });
